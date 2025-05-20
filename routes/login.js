@@ -29,10 +29,10 @@ router.post('/login', (req, res) => {
             const usuario = results[0];
 
             //Comparar si la contraseña son iguales 
-            const mactch = await bcrypt.compare(contraseña, usuario.contraseña);
-            if (mactch) {
-                return res.status(401).send("Contraseña Incorrecta");
-                }
+            const match = await bcrypt.compare(contraseña, usuario.contraseña);
+            if (!match) {
+                return res.status(401).send("Contraseña incorrecta");
+            }
             return res.status(200).send({
                 "message": "Login susefuly",
                 usuario: {
