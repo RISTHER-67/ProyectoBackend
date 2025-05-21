@@ -25,6 +25,7 @@ router.get("/products", (req, res) => {
 
         const result = productos.map((p) => {
           return {
+            id: p.productos_id,
             name: p.nombre,
             brand: `${p.marca} ${p.modelo}`,
             storage: p.capacidad,
