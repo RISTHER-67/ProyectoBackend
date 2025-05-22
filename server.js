@@ -9,9 +9,8 @@ const authRoute = require('./routes/auth');
 const loginRoute = require('./routes/login');
 const passwordRoute = require('./routes/password');
 const productsRoute = require('./routes/products'); // importar ruta
-const cartRoute = require('./routes/cart');
 const userRoute = require('./routes/user');
-
+const pedidoRoutes = require('./routes/pedido');
 
 
 // Midlewares
@@ -27,8 +26,9 @@ app.use('/api', authRoute);
 app.use('/api', loginRoute);
 app.use('/api', passwordRoute);
 app.use('/api', productsRoute);
-app.use('/api', cartRoute);
 app.use('/api', userRoute);
+app.use('/api', pedidoRoutes);
+
 
 // Inicializar el puerto
 const PORT = process.env.PORT || 3000;
