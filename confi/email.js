@@ -1,34 +1,35 @@
 const nodemailer = require("nodemailer");
+require('dotenv').config();
 
-// Create a transporter for SMTP
 const transporter = nodemailer.createTransport({
-    host: "gmail",
+    service: "gmail", 
     auth: {
         user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        pass: process.env.SMTP_PASSWORD,
     },
 });
 
-//funcion para enviar el correo de restablecimineto de contraseña
-const sendResetsPassword = async (to, resetUrl) =>{
-    try{
+// Función para enviar el correo de restablecimiento de contraseña
+const sendResetPassword = async (to, resetUrl) => { 
+    try {
         const mailOptions = {
-            from: process.SMTP_USER,
-            to: to, // list of receivers
-            subject:'Restablecimineto de contraseña',
-            html:`<B>Solicitaste el restablecimineto de tu contraseña?</b>
+            from: process.env.SMTP_USER, 
+            to: to,
+            subject: 'Restablecimiento de contraseña',
+            html: `<b>¿Solicitaste el restablecimiento de tu contraseña?</b>
             <p>Haz click en el siguiente enlace para restablecer tu contraseña</p>
-            <a href="${resetUrl}" target="_blank"> Restablecer contaseña </a>
+            <a href="${resetUrl}" target="_blank">Restablecer contraseña</a>
             <p>Este enlace expira en 1h</p>
-            <p>Si no fuiste tu ignoralo</p>`,
+            <p>Si no fuiste tú, ignóralo</p>`,
+        };
 
-    };
-    const info = await transporter.sendMail(mailOptions);
-    console .log("Mensaje enviado: %s", info.messageId);
-    return true;
-    }catch(err){
+        const info = await transporter.sendMail(mailOptions);
+        console.log("Mensaje enviado: %s", info.messageId);
+        return true;
+    } catch (err) {
         console.error("Error al enviar el correo", err);
+        throw err;
     }
-    
 };
-module.exports = {transporter, sendResetsPassword};
+
+module.exports = { transporter, sendResetPassword }; 
